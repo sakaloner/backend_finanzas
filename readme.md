@@ -40,5 +40,7 @@ Para la autorización al uso de la aplicación puede usarse auth02 con jwt. Fast
 ## Diagrama de la arquitectura
 ![Alt text](/diagram.png "a title")
  
+## Ejecucion
+
  
 

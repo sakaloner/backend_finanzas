@@ -1,9 +1,18 @@
 from datetime import datetime, timedelta
+import json
 import time
 import uuid
 import random
 
 from threading import Thread
+
+## Function to make uuid json parseable
+class UUIDEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, uuid.UUID):
+            # if the obj is uuid, we simply return the value of uuid
+            return obj.hex
+        return json.JSONEncoder.default(self, obj)
 
 class OrdersManager():
     __orders = []
@@ -15,11 +24,33 @@ class OrdersManager():
         self.__num_orders = num_orders
         self.__generate_fake_orders(quantity=self.__num_orders)
         self.list_threads = []
-
+    
     def __generate_fake_orders(self, quantity):
         self.__log(f"Generating fake orders")
         self.__orders = [(uuid.uuid4(), x) for x in range(quantity)]
         self.__log(f"{len(self.__orders)} generated...")
+
+    ## Storing the transaction in a json file
+    ## we will create chunk of files to save the json data
+    
+    def save_to_json_db(self, path):
+        if self.__num_orders <= 1000:
+            y = json.dumps(self.__orders, cls=UUIDEncoder)
+            with open(f'{path}.json', 'w') as f:
+                for x in y:
+                    f.write(y)
+        else:
+            size_chunks = 1000
+            chunks = self.__num_orders / size_chunks
+            for i_file in range(int(chunks+1)):
+                start_chunk = i_file * size_chunks
+                end_chunk = start_chunk + size_chunks
+                json_data = json.dumps(self.__orders[start_chunk:end_chunk], cls=UUIDEncoder)
+                with open(f'{path}_{i_file}.json', 'w') as f:
+                    for line in json_data:
+                        f.write(line)
+            
+            
 
     def __log(self, message):
         print(f"{datetime.now()} > {message}")
@@ -73,3 +104,7 @@ class OrdersManager():
         ## to stop the threads with join
         for thr in self.list_threads:
             thr.start()
+
+# om = OrdersManager(10000)
+
+# om.save_to_json_db('files/perro')
