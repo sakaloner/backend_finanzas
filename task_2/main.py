@@ -20,11 +20,16 @@ def populate_database(num_transactions:int=1_000_000):
     return {"message": f"successfully created the database data with {num_transactions} transactions"}
 
 @app.get("/transactions")
-def get_transactions(offset:int=0, limit:int=1000):
+def get_transactions_by_query(offset:int=0, limit:int=1000):
     return crud.get_lines(offset=offset, limit=limit)
 
-@app.post("/transactions/{transaction_id}")
+@app.get("/{transaction_id}")
 def get_transaction_with_id(transaction_id:int):
     return crud.get_transaction_by_id(trans_id=transaction_id)
+
+@app.get("/transactions/{page_num}")
+def get_transactions_by_page(page_num:int):
+    return crud.get_transaction_page(page_num=page_num)
+
 
 

@@ -72,9 +72,25 @@ def get_transaction_by_id(trans_id:int, filename='transactions'):
         ## couldnt find in file the id
         return f'couldnt find transaction with {trans_id} as id'
     
+def get_transaction_page(page_num:int, filename='transactions'):
+    chunk_size = 1000
+    all_files = os.listdir('db_files/')
+    all_files.sort(key=lambda i : i[len(filename)+2])
+    file_i = page_num
+
+    ## get filename where query is
+    for fi in all_files:
+        prefix_len = len(filename)
+        if int(fi[prefix_len+1:-5]) == file_i:
+            query_file = fi
+
+    with open(f'db_files/{query_file}') as f:
+        y = json.load(f)
+        print(y)
+        return y 
 
 if __name__ == '__main__':
     # lines = get_lines(0, 1000)
     # print(lines)
-    n = get_transaction_by_id(50)
+    n = get_transaction_page(1)
     print(n)
