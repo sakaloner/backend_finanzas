@@ -1,5 +1,5 @@
 # El plan
-Este repositorio contiene una prueba de backend development donde 1) tengo que mejorar un algoritmo para que se procesen mejor unas órdenes financieras ficticias y 2) tengo que hacer una REST API basada en el algoritmo anterior
+Este repositorio contiene los ejercicios desarrolados de una prueba para un puesto de backend development donde 1) se mejora un algoritmo para procesar órdenes financieras ficticias y 2) Se hace una REST API basada en el algoritmo anterior.
 
 # Setup
 Este ejercicio fue desarrollado en una maquina linux asi que es posible que no funciones algunas partes si se ejecuta en un computador con sistema operativo windows. Esto es debido a que los paths no se hicieron agnosticos de sistema operativo.
@@ -7,7 +7,7 @@ El archivo requirements.txt contiene los paquetes que hay que instalar para pode
 
 Para la primera task solo se uso el paquete de matplotlib para mostrar graficamente la diferencia de rendimiento entre el algoritmo original y el nuevo.
 
-El server de FastAPI (uvicorn) se ejecuta con el comando `uvicorn main:app --reload` estando en la carpeta "task_2".Normalmente se ejecuta en el puerto 8000 pero este valor se puede cambiar. Para probar la api se puede navegar a `localhost:8000/docs`.
+El server de FastAPI (uvicorn) se ejecuta con el comando `uvicorn main:app --reload` estando en la carpeta "task_2". Normalmente se ejecuta en el puerto 8000 pero este valor se puede cambiar. Para probar la api se puede navegar a `localhost:8000/docs`.
  
 # Ejercicio 1
 En el primer ejercicio el algoritmo procesa órdenes financieras. La clase principal y única se llama OrdersManagers. Esta clase tiene métodos para crear el id de las órdenes de manera programática (en el constructor se usa), loguear la información y guardar las órdenes en las bases de datos. El método principal es 'process orders' donde se usan las funciones logging y de guardado en base de datos (save_on_db) para procesar la información financiera creada en la base de datos en el constructor usando la función __generate_fake_orders.
